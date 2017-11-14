@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/default.xhtml"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+    <ui:define name="content">
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Sign In</h3>
+                    </div>
+                    <div class="panel-body">
+                        <h:form id="reg" role="form">
+                            <div class="form-group has-feedback #{!email.valid? 'has-error' : ''}">
+                                <h:outputLabel for="email" value="Email" styleClass="control-label"/>
+                                <h:inputText id="email" value="#{person.firstName}"
+                                             p:placeholder="adedejiadeoti@gmail.com" class="form-control"
+                                             binding="#{email}" required="true"/>
+                                <span class="#{!email.valid ? 'glyphicon glyphicon-remove form-control-feedback' : ''}"/>
+                                <h:message for="email" errorClass="control-label has-error"/>
+                            </div>
+
+                            <div class="form-group has-feedback #{!password.valid? 'has-error' : ''}">
+                                <h:outputLabel for="password" value="Password" styleClass="control-label"/>
+                                <h:inputText id="password" value="#{person.firstName}"
+                                             class="form-control"
+                                             binding="#{password}" required="true"/>
+                                <span class="#{!password.valid ? 'glyphicon glyphicon-remove form-control-feedback' : ''}"/>
+                                <h:message for="password" errorClass="control-label has-error"/>
+                            </div>
+
+                           
+
+                          
+
+                            <div class="form-group">
+
+                                <h:commandButton id="Add"
+                                                 action="#{registration.submit(person)}" value="Add"
+                                                 styleClass="btn btn-primary form-control"/>
+                            </div>
+                            
+                            <div  class="form-group">
+                                <h:link id="register_link" value="Register as new volunteer" outcome="/account/register"
+                                        />
+                            </div>
+                            <h:messages styleClass="messages"
+                                        style="list-style: none; padding:0; margin:0;"
+                                        errorClass="alert alert-error" infoClass="alert alert-success"
+                                        warnClass="alert alert-warning" globalOnly="true"/>
+
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </ui:define>
+</ui:composition>
