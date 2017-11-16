@@ -7,6 +7,10 @@ package io.github.jadeoti.voluntr.service;
 
 import io.github.jadeoti.voluntr.entity.Volunteer;
 import io.github.jadeoti.voluntr.persistence.MembershipPersistenceService;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -23,6 +27,17 @@ public class MembershipBusinessService {
     public Volunteer register(Volunteer volunteer) {
         Volunteer person = persistenceService.create(volunteer);
         return person;        
+    }
+    
+    public List<Volunteer> findVolunteers(String description){
+        List<Volunteer> volunteers = null;
+        if(description == null){
+            volunteers = persistenceService.findAll();
+        }else{
+            volunteers = persistenceService.seachVolunteer(description);
+        }        
+        return volunteers;
+        
     }
     
     

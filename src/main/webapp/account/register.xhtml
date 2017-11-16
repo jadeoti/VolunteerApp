@@ -16,30 +16,36 @@
                     </div>
                     <div class="panel-body">
                         <h:form id="reg" role="form">
+
+<!--                            <h:messages styleClass="messages"
+                                        style="list-style: none; padding:0; margin:0;"
+                                        errorClass="alert alert-error" infoClass="alert alert-success"
+                                        warnClass="alert alert-warning" globalOnly="true"/>-->
+
                             <div class="form-group has-feedback #{!firstname.valid? 'has-error' : ''}">
                                 <h:outputLabel for="firstname" value="Firstname" styleClass="control-label"/>
-                                <h:inputText id="firstname" value="#{person.firstName}"
+                                <h:inputText id="firstname" value="#{registration.volunteer.firstName}"
                                              p:placeholder="Adedeji" class="form-control"
-                                             binding="#{firstname}" required="true"/>
+                                             binding="#{firstname}"/>
                                 <span class="#{!firstname.valid ? 'glyphicon glyphicon-remove form-control-feedback' : ''}"/>
                                 <h:message for="firstname" errorClass="control-label has-error"/>
                             </div>
 
                             <div  class="form-group has-feedback #{!middlename.valid? 'has-error' : ''}">
                                 <h:outputLabel for="middlename" value="Middlename" styleClass="control-label"/>
-                                <h:inputText id="middlename" value="#{person.middleName}"
+                                <h:inputText id="middlename" value="#{registration.volunteer.middleName}"
                                              p:placeholder="Jo" class="form-control"
                                              binding="#{middlename}"/>
                                 <span class="#{!middlename.valid ? 'glyphicon glyphicon-remove form-control-feedback' : ''}"/>
 
-                                <h:message for="middlename" errorClass="control-label has-error"/>
+
                             </div>
 
                             <div  class="form-group has-feedback #{!lastname.valid? 'has-error' : ''}">
                                 <h:outputLabel for="lastname" value="Lastname" styleClass="control-label"/>
-                                <h:inputText id="lastname" value="#{person.lastName}"
+                                <h:inputText id="lastname" value="#{registration.volunteer.lastName}"
                                              p:placeholder="Adeoti" class="form-control"
-                                             binding="#{lastname}" required="true"/>
+                                                binding="#{lastname}"/>
                                 <span class="#{!lastname.valid ? 'glyphicon glyphicon-remove form-control-feedback' : ''}"/>
 
                                 <h:message for="lastname" errorClass="control-label has-error"/>
@@ -47,50 +53,70 @@
 
                             <div  class="form-group has-feedback #{!email.valid? 'has-error' : ''}">
                                 <h:outputLabel for="email" value="Email" styleClass="control-label"/>
-                                <h:inputText id="email" value="#{person.email}"
+                                <h:inputText id="email" value="#{registration.volunteer.email}"
                                              p:placeholder="sprtnjoe@gmail.com" class="form-control"
-                                             binding="#{email}" required="true"/>
-                                <span class="#{!firstname.valid ? 'glyphicon glyphicon-remove form-control-feedback' : ''}"/>
+                                             binding="#{email}"/>
+                                <span class="#{!email.valid ? 'glyphicon glyphicon-remove form-control-feedback' : ''}"/>
 
                                 <h:message for="email" errorClass="control-label has-error"/>
                             </div>
 
                             <div  class="form-group has-feedback #{!want_news_letter.valid? 'has-error' : ''}">
                                 <h:outputLabel for="want_news_letter" value="Subscribe for newsletter" styleClass="control-label"/>
-                                <h:selectBooleanCheckbox id="want_news_letter" value="#{person.wantNewsletter}" title="Subscribe for newsletter"
-                                                         binding="#{want_news_letter}" required="true"/>
-                                <h:message for="email" errorClass="control-label has-error"/>
+                                <h:selectBooleanCheckbox id="want_news_letter" value="#{registration.volunteer.wantNewsletter}" title="Subscribe for newsletter"
+                                                         required="true" binding="#{want_news_letter}"/>
+                                <h:message for="want_news_letter" errorClass="control-label has-error"/>
                             </div>
 
-<!--                            <div  class="form-group">
-                                <h:outputLabel for="password" value="Password" styleClass="control-label"/>
-                                <h:inputSecret id="password" value="#{person.password}"
-                                               class="form-control"
-                                               binding="#{password}"/>
-                                <h:message for="password_text" errorClass="control-label has-error"/>
-                            </div>
-
-                            <div  class="form-group">
-                                <h:outputLabel for="confirm_password" value="Confirm Password" styleClass="control-label"/>
-                                <h:inputSecret id="confirm_password" value="#{person.passwordConfirmation}"
-                                               class="form-control"
-                                               binding="#{confirm_password}"/>
-                                <h:message for="confirm-password" errorClass="control-label has-error"/>
-                            </div>-->
 
                             <div class="form-group">
 
-                                <h:commandButton id="Submit"
-                                                 action="#{registration.submit(person)}" value="Submit"
+                                <h:commandButton id="Submit" rendered="#{registration.volunteer.id == null}"
+                                                 action="#{registration.submitVoluteer()}" value="Submit"
                                                  styleClass="btn btn-primary form-control"/>
+
+                                <h:commandButton id="Update" rendered="#{registration.volunteer.id != null}"
+                                                 action="#{registration.updateVoluteer()}" value="Update"
+                                                 styleClass="btn btn-info form-control"/>
+
                             </div>
-                            <h:messages styleClass="messages"
-                                        style="list-style: none; padding:0; margin:0;"
-                                        errorClass="alert alert-error" infoClass="alert alert-success"
-                                        warnClass="alert alert-warning" globalOnly="true"/>
+
 
                         </h:form>
                     </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-8">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Volunteers</h2>
+                    </div>
+                    <h:form>
+
+
+                        <h:panelGroup rendered="#{not empty registration.volunteers}">
+                            <h:dataTable value="#{registration.volunteers}" var="vol" rendered="#{not empty registration.volunteers}"
+                                         styleClass="table table-hover table-striped">
+                                <h:column>
+                                    <f:facet name="header">Name</f:facet>
+                                        #{vol.firstName} #{vol.lastName} 
+                                </h:column>
+
+
+                                <h:column>
+                                    <f:facet name="header">Edit</f:facet>
+                                    <h:commandLink value="Edit" action="#{registration.editVolunteer(vol)}"/>
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">Delete</f:facet>
+                                    <h:commandLink value="Delete" action="#{registration.deleteVolunteer(vol)}"/>
+                                </h:column>
+                            </h:dataTable>
+                        </h:panelGroup>
+                    </h:form>
                 </div>
             </div>
 

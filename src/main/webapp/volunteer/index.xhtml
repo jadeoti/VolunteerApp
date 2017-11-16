@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+                template="./../WEB-INF/templates/default.xhtml">
+
+    <ui:define name="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Volunteers</h2>
+                    </div>
+                    
+                    <h:panelGroup rendered="#{empty registration.volunteers}">
+                        <em>No Volunteer Found.</em>
+                    </h:panelGroup>
+                    <h:dataTable var="volunteer" value="#{registration.volunteers}"
+                                 rendered="#{not empty registration.volunteers}"
+                                 styleClass="table table-hover table-striped ">
+                        <h:column>
+                            <f:facet name="header">Id</f:facet>
+                            #{volunteer.id}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Name</f:facet>
+                            #{volunteer.firstName}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Date Join</f:facet>
+                            #{volunteer.dateCreated}
+                        </h:column>
+                       
+                    </h:dataTable>
+                    
+                    
+
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+</ui:composition>

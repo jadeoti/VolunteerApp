@@ -20,6 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -43,23 +44,25 @@ public class Volunteer implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Size(min = 1, max = 20)
-    @Column(name= "title", length = 20, nullable = false)
+    @Size(min = 0, max = 20)
+    @Column(name= "title", length = 20, nullable = true)
     private String title;
     
-    @Size(min = 1, max = 200)
+    @Size(min = 1, max = 200, message = "Firstname cannot be empty.")
     @Column(name = "first_name", length = 200, nullable = false)
     private String firstName;
     
-    @Size(min = 1, max = 200)
+    @Size(min = 0, max = 200)
     @Column(name = "middle_name", length = 200, nullable = true)
     private String middleName;
     
-    @Size(min = 1, max = 200)
+    @Size(min = 1, max = 200, message = "Lastname cannot be empty.")
     @Column(name = "last_name", length = 200, nullable = false)
     private String lastName;
     
-    @Size(min = 1, max = 200)
+    @Size(min = 1, message = "Email Address cannot be empty.")    
+    @Pattern(regexp = "[a-zA-Z0-9]+@[a-zA-Z0-9]+\\.[a-zA-Z0-9]+",
+            message = "Email format is invalid.")
     @Column(name = "email", length = 200, nullable = false)
     private String email;
     
@@ -67,19 +70,19 @@ public class Volunteer implements Serializable {
     private boolean wantNewsletter;
     
     @Column(name = "active")
-    private boolean active;
+    private boolean active = true;
     
-    @Size(min = 1, max = 100)
-    @Column(name = "gender", length = 100, nullable = false)
+    @Size(min = 0, max = 100)
+    @Column(name = "gender", length = 100, nullable = true)
     private String gender;
     
     @Column(name = "date_created")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date dateCreated;
+    private Date dateCreated = new Date();
     
     @Column(name = "date_updated")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date dateUpdated;    
+    private Date dateUpdated = new Date();    
     
     @Past
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
