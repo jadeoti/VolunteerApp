@@ -8,21 +8,23 @@ package io.github.jadeoti.voluntr.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.picketlink.idm.jpa.model.sample.simple.AccountTypeEntity;
 
 /**
  *
@@ -47,6 +49,7 @@ public class Volunteer implements Serializable {
     @Size(min = 0, max = 20)
     @Column(name= "title", length = 20, nullable = true)
     private String title;
+   
     
     @Size(min = 1, max = 200, message = "Firstname cannot be empty.")
     @Column(name = "first_name", length = 200, nullable = false)
@@ -94,6 +97,10 @@ public class Volunteer implements Serializable {
     
     @OneToMany(mappedBy = "owner")
     private List<Address> addresses;
+   
+    @OneToOne
+    @JoinColumn(name="user_id", referencedColumnName = "id")
+    private AccountTypeEntity user;
     
     public Long getId() {
         return id;
@@ -102,7 +109,8 @@ public class Volunteer implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
+    
+    
     public String getTitle() {
         return title;
     }
@@ -206,6 +214,18 @@ public class Volunteer implements Serializable {
     public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
     }
+
+    public AccountTypeEntity getUser() {
+        return user;
+    }
+
+    public void setUser(AccountTypeEntity user) {
+        this.user = user;
+    }
+
+
+    
+    
     
     
     

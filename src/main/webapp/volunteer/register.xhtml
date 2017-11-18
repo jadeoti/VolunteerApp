@@ -18,32 +18,33 @@
                     <div class="panel-body">
                         <h:form id="reg" role="form">
 
-                            <h:messages styleClass="messages"
-                                        style="list-style: none; padding:0; margin:0;"
-                                        errorClass="alert alert-error" infoClass="alert alert-success"
-                                        warnClass="alert alert-warning" globalOnly="true"/>
+                            <!--                            <h:messages styleClass="messages"
+                                                                    style="list-style: none; padding:0; margin:0;"
+                                                                    errorClass="alert alert-error" infoClass="alert alert-success"
+                                                                    warnClass="alert alert-warning" globalOnly="true"/>-->
 
-                            <div class="form-group has-feedback #{!username.valid? 'has-error' : ''}">
-                                <h:outputLabel for="username" value="Username" styleClass="control-label"/>
-                                <h:inputText id="username" value="#{signUpView.user.loginName}"
-                                             pt:placeholder="Adedeji" class="form-control"
-                                             binding="#{username}"/>
-                                <span class="#{!username.valid ? 'glyphicon glyphicon-remove form-control-feedback' : ''}"/>
-                                <h:message for="username" errorClass="control-label has-error"/>
-                            </div>
-                            
                             <div class="form-group has-feedback #{!firstname.valid? 'has-error' : ''}">
                                 <h:outputLabel for="firstname" value="Firstname" styleClass="control-label"/>
-                                <h:inputText id="firstname" value="#{signUpView.user.firstName}"
+                                <h:inputText id="firstname" value="#{registration.volunteer.firstName}"
                                              p:placeholder="Adedeji" class="form-control"
                                              binding="#{firstname}"/>
                                 <span class="#{!firstname.valid ? 'glyphicon glyphicon-remove form-control-feedback' : ''}"/>
                                 <h:message for="firstname" errorClass="control-label has-error"/>
                             </div>
 
+                            <div  class="form-group has-feedback #{!middlename.valid? 'has-error' : ''}">
+                                <h:outputLabel for="middlename" value="Middlename" styleClass="control-label"/>
+                                <h:inputText id="middlename" value="#{registration.volunteer.middleName}"
+                                             pt:placeholder="Jo" class="form-control"
+                                             binding="#{middlename}"/>
+                                <span class="#{!middlename.valid ? 'glyphicon glyphicon-remove form-control-feedback' : ''}"/>
+
+
+                            </div>
+
                             <div  class="form-group has-feedback #{!lastname.valid? 'has-error' : ''}">
                                 <h:outputLabel for="lastname" value="Lastname" styleClass="control-label"/>
-                                <h:inputText id="lastname" value="#{signUpView.user.lastName}"
+                                <h:inputText id="lastname" value="#{registration.volunteer.lastName}"
                                              p:placeholder="Adeoti" class="form-control"
                                              binding="#{lastname}"/>
                                 <span class="#{!lastname.valid ? 'glyphicon glyphicon-remove form-control-feedback' : ''}"/>
@@ -53,7 +54,7 @@
 
                             <div  class="form-group has-feedback #{!email.valid? 'has-error' : ''}">
                                 <h:outputLabel for="email" value="Email" styleClass="control-label"/>
-                                <h:inputText id="email" value="#{signUpView.user.email}"
+                                <h:inputText id="email" value="#{registration.volunteer.email}"
                                              p:placeholder="sprtnjoe@gmail.com" class="form-control"
                                              binding="#{email}"/>
                                 <span class="#{!email.valid ? 'glyphicon glyphicon-remove form-control-feedback' : ''}"/>
@@ -63,17 +64,23 @@
 
                             <div  class="form-group has-feedback #{!want_news_letter.valid? 'has-error' : ''}">
                                 <h:outputLabel for="want_news_letter" value="Subscribe for newsletter" styleClass="control-label"/>
-                                <h:selectBooleanCheckbox id="want_news_letter" value="#{signUpView.wantNewsLetter}" title="Subscribe for newsletter"
+                                <h:selectBooleanCheckbox id="want_news_letter" value="#{registration.volunteer.wantNewsletter}" title="Subscribe for newsletter"
                                                          required="true" binding="#{want_news_letter}"/>
                                 <h:message for="want_news_letter" errorClass="control-label has-error"/>
-                            </div>    
+                            </div>
+
+                           
 
 
                             <div class="form-group">
 
-                                <h:commandButton id="Submit" rendered="#{signUpView.user.id == null}"
-                                                 action="#{signUpView.save()}" value="Submit"
+                                <h:commandButton id="Submit" rendered="#{registration.volunteer.id == null}"
+                                                 action="#{registration.submitVoluteer()}" value="Submit"
                                                  styleClass="btn btn-primary form-control"/>
+
+                                <h:commandButton id="Update" rendered="#{registration.volunteer.id != null}"
+                                                 action="#{registration.updateVoluteer()}" value="Update"
+                                                 styleClass="btn btn-info form-control"/>
 
                             </div>
 
@@ -85,8 +92,8 @@
 
 
             <div class="col-md-8">
-                <h:graphicImage library="images" name="vol_2.jpg"/>
-<!--                <div class="panel panel-default">
+                <!--                <h:graphicImage library="images" name="vol_2.jpg"/>-->
+                <div class="panel panel-default">
                     <div class="panel-heading">
                         <h2 class="panel-title">Volunteers</h2>
                     </div>
@@ -114,7 +121,7 @@
                             </h:dataTable>
                         </h:panelGroup>
                     </h:form>
-                </div>-->
+                </div>
             </div>
 
         </div>
