@@ -48,7 +48,7 @@ public class SignInView {
 
     public String login() {
         if (identity.isLoggedIn()) {
-            return "/faces/volunteer/applicants.xhtml?faces-redirect=true";
+            return "/index?faces-redirect=true";
         }
 
         Identity.AuthenticationResult result = identity.login();

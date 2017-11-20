@@ -39,10 +39,7 @@
                             </h:column>
 
                             <h:column>
-                                <!--<h:commandLink value="Decide" action="#{applicantsView.setApplicant(applicant)}"/>-->
-                                <h:commandLink value="Decide">
-                                    <f:ajax render="applicant_details" event="click" immediate="false" listener="#{applicantsView.setApplicant(applicant)}"></f:ajax>
-                                </h:commandLink>
+                                <h:commandLink value="Decide" action="#{applicantsView.setApplicant(applicant)}"/>
                             </h:column>
 
                         </h:dataTable>
@@ -57,21 +54,21 @@
                     <div class="panel-heading">
                         <h2 class="panel-title">Detail</h2>
                     </div>
-                    <h:form id="applicant_details">
+                    <h:form>
 
-                        <h:panelGroup >
+                        <h:panelGroup rendered="#{applicantsView.applicant.id != null}">
                             <div>
                                 <b><h:outputText value="Lastname: "/></b>
                                 <h:outputText value="#{applicantsView.applicant.lastName}"/>
                             </div>
 
                             <div>
-                                <h:outputText value="Firstname: "/>
+                                <b><h:outputText value="Firstname: "/></b>
                                 <h:outputText value="#{applicantsView.applicant.firstName}"/>
                             </div>
 
                             <div>
-                                <h:outputText value="Essay: "/>
+                                <b><h:outputText value="Essay: "/></b>
                                 <h:outputText value="#{applicantsView.applicant.essay}"/>
                             </div>
 

@@ -10,6 +10,7 @@ import io.github.jadeoti.voluntr.service.MembershipService;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import org.picketlink.idm.IdentityManager;
 import org.picketlink.idm.PartitionManager;
@@ -33,13 +34,13 @@ public class SetupManager {
     
     @PostConstruct
     public void init(){
-        addUser();
-        addApplicant();
+//        addUser();
+//        addApplicant();
     }
     
     public void addUser(){        
         System.out.println("::::::::: Init running");
-        IdentityManager idManager = this.partitionManager.createIdentityManager();
+        IdentityManager idManager = partitionManager.createIdentityManager();
         User user = BasicModel.getUser(idManager, "admin");
         if (user == null) {
             user = new User("deployer");

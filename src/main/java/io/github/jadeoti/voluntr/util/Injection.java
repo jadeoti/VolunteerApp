@@ -10,6 +10,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.faces.context.FacesContext;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import org.picketlink.annotations.PicketLink;
 
 /**
  *
@@ -26,5 +29,22 @@ public class Injection {
     @RequestScoped
     public FacesContext produceFacesContext() {
         return FacesContext.getCurrentInstance();
-    }     
+    }
+    
+       
+    /**
+     * The EntityManager.
+     */
+    @PersistenceContext(unitName = "io.gitub.jadeoti.voluntrPU")
+    private EntityManager em;
+
+    /**
+     * Produces the EntityManager.
+     *
+     * @return the EntityManager.
+     */
+    @Produces
+    public EntityManager producePicketLinkEntityManager() {
+        return em;
+    }
 }

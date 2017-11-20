@@ -48,7 +48,7 @@
                         <h:panelGroup rendered="#{identity.account != null}" layout="block">
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
-                                    <h:link outcome="/volunteer/register" value="Welcome #{identity.account.loginName}"/>                
+                                    <h:link outcome="/volunteer/profile" value="Welcome #{identity.account.loginName}"/>                
                                 </li>
                                 <li><h:link value="Log Off" outcome="/index" onclick="#{signInView.logout()}" /></li>
                             </ul>

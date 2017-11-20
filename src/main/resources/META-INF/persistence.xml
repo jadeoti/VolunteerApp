@@ -14,7 +14,7 @@
     <class>org.picketlink.idm.jpa.model.sample.simple.AttributeTypeEntity</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
-      <property name="hibernate.hbm2ddl.auto" value="create"/>
+<!--      <property name="hibernate.hbm2ddl.auto" value="create"/>-->
     </properties>
   </persistence-unit>
 </persistence>
