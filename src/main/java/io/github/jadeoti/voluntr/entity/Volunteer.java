@@ -98,9 +98,8 @@ public class Volunteer implements Serializable {
     @OneToMany(mappedBy = "owner")
     private List<Address> addresses;
    
-    @OneToOne
-    @JoinColumn(name="user_id", referencedColumnName = "id")
-    private AccountTypeEntity user;
+    @Column(name = "username", unique = true)
+    private String username;
     
     public Long getId() {
         return id;
@@ -215,13 +214,7 @@ public class Volunteer implements Serializable {
         this.addresses = addresses;
     }
 
-    public AccountTypeEntity getUser() {
-        return user;
-    }
-
-    public void setUser(AccountTypeEntity user) {
-        this.user = user;
-    }
+  
 
 
     
@@ -254,6 +247,14 @@ public class Volunteer implements Serializable {
     @Override
     public String toString() {
         return "io.github.jadeoti.voluntr.data.entity.Volunteer[ id=" + id + " ]";
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
     
 }

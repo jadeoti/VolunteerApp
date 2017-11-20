@@ -26,7 +26,7 @@
                             <div class="form-group has-feedback #{!username.valid? 'has-error' : ''}">
                                 <h:outputLabel for="username" value="Username" styleClass="control-label"/>
                                 <h:inputText id="username" value="#{signUpView.user.loginName}"
-                                             pt:placeholder="Adedeji" class="form-control"
+                                             pt:placeholder="sprtnjoe" class="form-control"
                                              binding="#{username}"/>
                                 <span class="#{!username.valid ? 'glyphicon glyphicon-remove form-control-feedback' : ''}"/>
                                 <h:message for="username" errorClass="control-label has-error"/>
@@ -61,6 +61,26 @@
                                 <h:message for="email" errorClass="control-label has-error"/>
                             </div>
 
+                            <div  class="form-group has-feedback #{!essay.valid? 'has-error' : ''}">
+                                <h:outputLabel for="essay" value="Write a short essay about how you aspire to improve primary education in Nigeria. (Not more than 300 words)" styleClass="control-label"/>
+                                <h:inputTextarea id="essay" value="#{signUpView.essay}"
+                                                 p:placeholder="" class="form-control"
+                                                 binding="#{essay}" rows="10"/>
+                                <span class="#{!essay.valid ? 'glyphicon glyphicon-remove form-control-feedback' : ''}"/>
+
+                                <h:message for="essay" errorClass="control-label has-error"/>
+                            </div>
+                            
+                            <div  class="form-group has-feedback #{!password.valid? 'has-error' : ''}">
+                                <h:outputLabel for="password" value="Password" styleClass="control-label"/>
+                                <h:inputSecret id="password" value="#{signUpView.password}"
+                                              class="form-control"
+                                              binding="#{password}"/>
+                                <span class="#{!password.valid ? 'glyphicon glyphicon-remove form-control-feedback' : ''}"/>
+
+                                <h:message for="password" errorClass="control-label has-error"/>
+                            </div>
+                            
                             <div  class="form-group has-feedback #{!want_news_letter.valid? 'has-error' : ''}">
                                 <h:outputLabel for="want_news_letter" value="Subscribe for newsletter" styleClass="control-label"/>
                                 <h:selectBooleanCheckbox id="want_news_letter" value="#{signUpView.wantNewsLetter}" title="Subscribe for newsletter"
@@ -69,6 +89,8 @@
                             </div>    
 
 
+                            
+                            
                             <div class="form-group">
 
                                 <h:commandButton id="Submit" rendered="#{signUpView.user.id == null}"

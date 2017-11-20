@@ -5,6 +5,8 @@
  */
 package io.github.jadeoti.voluntr.persistence;
 
+import io.github.jadeoti.voluntr.entity.Applicant;
+import io.github.jadeoti.voluntr.entity.ApplicationDecision;
 import io.github.jadeoti.voluntr.entity.Volunteer;
 import java.io.Serializable;
 import java.util.Date;
@@ -44,7 +46,11 @@ public class MembershipPersistenceService implements Serializable{
         return volunteer;
     }
 
-    
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public <T> T insert(T t){
+        em.persist(t);
+        return t;
+    }
     
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public <T> void update(T t) {
@@ -79,6 +85,15 @@ public class MembershipPersistenceService implements Serializable{
     public List<Volunteer> seachVolunteer(String description) {
 
         throw new UnsupportedOperationException("Not supported yet.");
+    }
+    public List<Applicant> getApplicants() {
+        return em.createNamedQuery("Applicant.findAll").getResultList();
+    }
+    
+    public List<Applicant> getApplicantsByDecision(ApplicationDecision applicationDecision) {
+        return em.createNamedQuery("Applicant.findApplicantByDecision")
+                .setParameter("decision", applicationDecision)
+                .getResultList();
     }
 
 }

@@ -5,8 +5,11 @@
  */
 package io.github.jadeoti.voluntr.service;
 
+import io.github.jadeoti.voluntr.entity.Applicant;
+import io.github.jadeoti.voluntr.entity.ApplicationDecision;
 import io.github.jadeoti.voluntr.entity.Volunteer;
 import io.github.jadeoti.voluntr.persistence.MembershipPersistenceService;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -62,15 +65,28 @@ public class MembershipService {
    }
     
    public void addUser(User user, String password){
-       IdentityManager idManager = partitionManager.createIdentityManager();
-       if(user != null && password != null){
-           idManager.add(user);
-           idManager.updateCredential(user, new Password(password));
-       }else{
-           //log.warning("Invalid paramaters. One user or password is null");
-       }
-
+        addUser(user, password, null);
    }
+
+    public void addUser(User user, String password, String essay) {
+        IdentityManager idManager = partitionManager.createIdentityManager();
+        if (user != null && password != null) {
+            idManager.add(user);
+            idManager.updateCredential(user, new Password(password));
+           
+            // create application
+            Applicant applicant = new Applicant();
+            applicant.setDecision(ApplicationDecision.PENDING);
+            applicant.setEmail(user.getEmail());
+            applicant.setFirstName(user.getFirstName());
+            applicant.setLastName(user.getLastName());
+            applicant.setEssay(essay);
+            applicant.setUsername(user.getLoginName());
+            persistenceService.insert(applicant);
+        } else {
+            //log.warning("Invalid paramaters. One user or password is null");
+        }
+    }
    
    public void updateUser(User user, String password){
        IdentityManager idManager = partitionManager.createIdentityManager();
@@ -99,6 +115,14 @@ public class MembershipService {
         return !StringUtil.isNullOrEmpty(name);
     }
     
+    public boolean validEssay(String text) {
+        // TODO: Do advanced validation later
+        return !StringUtil.isNullOrEmpty(text);
+    }
+    public boolean validPassword(String password) {
+        return !StringUtil.isNullOrEmpty(password);
+    }
+    
     public boolean validEmail(String email){
         if (StringUtil.isNullOrEmpty(email)){
             return false;
@@ -107,6 +131,25 @@ public class MembershipService {
         }else {
             return true;
         }
+    }
+
+    public List<Applicant> getApplicants(ApplicationDecision applicationDecision) {
+       
+        List<Applicant> applicants;
+        if(null == applicationDecision){
+            applicants  = persistenceService.getApplicants();
+        }else{
+            applicants  =  persistenceService.getApplicantsByDecision(applicationDecision);
+        }
+        return applicants;
+    }
+    
+    public void decide(Applicant applicant, ApplicationDecision decision){
+        applicant.setDecision(decision);
+        applicant.setDateUpdated(new Date());
+        persistenceService.update(applicant);
+        
+        //TODO: send onboarding mail etc
     }
     
 }

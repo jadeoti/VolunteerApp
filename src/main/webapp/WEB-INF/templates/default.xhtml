@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -28,18 +28,31 @@
                         <h:link outcome="/index" class="navbar-brand" value="Edu Aid Inc"/>
                     </div>
                     <div class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav">
+                        <ul class="nav navbar-nav" >
                             <li class="#{view.viewId =='/home/about.xhtml' ? 'active':''}"><h:link
                                     outcome="/home/about" value="About Edu Aid"/></li>
                             <li class="#{view.viewId =='/home/contact.xhtml' ? 'active':''}"><h:link
-                                    outcome="/home/contact" value="Contact Us"/></li>                        </ul>
-
-                        <ul class="nav navbar-nav navbar-right">
-<!--                            <li class="#{view.viewId =='/account/register.xhtml' ? 'active':''}"><h:link
-                                    outcome="/account/register" value="Register"/></li>-->
-                            <li class="#{view.viewId =='/account/signin.xhtml' ? 'active':''}"><h:link
-                                    outcome="/account/signin" value="Sign In"/></li>                            
+                                    outcome="/home/contact" value="Contact Us"/></li>
                         </ul>
+
+                        <h:panelGroup rendered="#{identity.account == null}" layout="block">
+
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="#{view.viewId =='/account/register.xhtml' ? 'active':''}"><h:link
+                                        outcome="/account/register" value="Register"/></li>
+                                <li class="#{view.viewId =='/account/signin.xhtml' ? 'active':''}"><h:link
+                                        outcome="/account/signin" value="Sign In"/></li>                            
+                            </ul>
+                        </h:panelGroup>
+
+                        <h:panelGroup rendered="#{identity.account != null}" layout="block">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <h:link outcome="/volunteer/register" value="Welcome #{identity.account.loginName}"/>                
+                                </li>
+                                <li><h:link value="Log Off" outcome="/index" onclick="#{signInView.logout()}" /></li>
+                            </ul>
+                        </h:panelGroup>
                     </div>
                 </div>
             </div>
